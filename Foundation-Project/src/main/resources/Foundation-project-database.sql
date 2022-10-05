@@ -1,7 +1,7 @@
 CREATE TABLE Employee(
 	ID serial PRIMARY KEY,
-	"first name" varchar(40),
-	"last name" varchar(40),
+	"first" varchar(40),
+	"last" varchar(40),
 	email varchar(40),
 	user_name varchar(25) NOT NULL UNIQUE,
 	"password" varchar(30) NOT NULL
@@ -35,4 +35,5 @@ INSERT INTO Manager ("name", email, user_name, "password") VALUES ('Veradis', 'v
 INSERT INTO Manager ("name", email, user_name, "password") VALUES ('Desdemona', 'dhorlock1@sphinn.com', 'dlowndsborough1', '7qlqT52iQz');
 INSERT INTO Manager ("name", email, user_name, "password") VALUES ('Nanon', 'nglanders2@cnn.com', 'nkilvington2', 'KfCPsjxBP4Q');
 
-
+INSERT INTO reimbursement
+VALUES ()

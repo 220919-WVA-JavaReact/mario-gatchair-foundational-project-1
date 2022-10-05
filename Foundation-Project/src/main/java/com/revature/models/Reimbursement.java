@@ -1,8 +1,9 @@
 package com.revature.models;
 
+import java.util.List;
 import java.util.Objects;
 
-public class Reimbursement {
+public class Reimbursement implements List<Reimbursement> {
 
     private int ticketid;
 
@@ -14,7 +15,7 @@ public class Reimbursement {
 
     private String description;
 
-    public Reimbursement(int ticketid, int employeeid, double amount, String handledby, String description) {
+    public Reimbursement(int ticketid, int employeeid, double amount, String handledby, int handled_by, String description) {
         this.ticketid = ticketid;
         this.employeeid = employeeid;
         this.amount = amount;
@@ -22,11 +23,7 @@ public class Reimbursement {
         this.description = description;
     }
 
-    public Reimbursement(int ticketid, int employeeid, double amount, String handledby) {
-        this.ticketid = ticketid;
-        this.employeeid = employeeid;
-        this.amount = amount;
-        this.handledby = handledby;
+    public Reimbursement() {
     }
 
     public int getTicketid() {

@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 
 public class EmployeeDAOImpl implements EmployeeDAO{
     String line = "";
@@ -32,6 +33,11 @@ public class EmployeeDAOImpl implements EmployeeDAO{
     @Override
     public Employee createEmployee(String first, String last, String username, String password) {
         System.out.println("Congrats on joining the staff");
+        return null;
+    }
+
+    @Override
+    public List<Employee> getAllEmployee() {
         return null;
     }
 }

@@ -26,8 +26,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
     }
 
     @Override
-    public boolean updateStatus(ObjectInputFilter.Status status) {
-        System.out.println("Status updated");
+    public boolean updateStatus(String status) {
         return false;
     }
 }

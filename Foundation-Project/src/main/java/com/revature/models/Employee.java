@@ -25,11 +25,14 @@ public class Employee {
         this.password = password;
     }
 
-    public Employee(int employeeId, String username, String password) {
-        this.employeeId = employeeId;
-        this.username = username;
-        this.password = password;
-    }
+//    public Employee(int employeeId, String username, String password) {
+//        this.employeeId = employeeId;
+//        this.username = username;
+//        this.password = password;
+//    }
+//
+//    public Employee() {
+//    }
 
     public int getEmployeeId() {
         return employeeId;

@@ -14,25 +14,15 @@ public class Manager {
 
     private String password;
 
-    private boolean admin;
-
-    private String ticket_status;
-
-    public Manager(int managerId, String name, String email, String username, String password, boolean admin, String ticket_status) {
+    public Manager(int managerId, String name, String email, String username, String password) {
         this.managerId = managerId;
         this.name = name;
         this.email = email;
         this.username = username;
         this.password = password;
-        this.admin = admin;
-        this.ticket_status = ticket_status;
     }
 
-    public Manager(String username, String password, boolean admin, String ticket_status) {
-        this.username = username;
-        this.password = password;
-        this.admin = admin;
-        this.ticket_status = ticket_status;
+    public Manager() {
     }
 
     public int getManagerId() {
@@ -75,22 +65,6 @@ public class Manager {
         this.password = password;
     }
 
-    public boolean isAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
-    }
-
-    public String getTicket_status() {
-        return ticket_status;
-    }
-
-    public void setTicket_status(String ticket_status) {
-        this.ticket_status = ticket_status;
-    }
-
     @Override
     public String toString() {
         return "Manager{" +
@@ -99,22 +73,19 @@ public class Manager {
                 ", email='" + email + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", admin=" + admin +
-                ", ticket_status='" + ticket_status + '\'' +
                 '}';
     }
-
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Manager manager = (Manager) o;
-        return managerId == manager.managerId && admin == manager.admin && Objects.equals(name, manager.name) && Objects.equals(email, manager.email) && Objects.equals(username, manager.username) && Objects.equals(password, manager.password) && Objects.equals(ticket_status, manager.ticket_status);
+        return managerId == manager.managerId && Objects.equals(name, manager.name) && Objects.equals(email, manager.email) && Objects.equals(username, manager.username) && Objects.equals(password, manager.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(managerId, name, email, username, password, admin, ticket_status);
+        return Objects.hash(managerId, name, email, username, password);
     }
 }

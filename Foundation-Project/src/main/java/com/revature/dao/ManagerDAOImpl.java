@@ -20,7 +20,7 @@ public class ManagerDAOImpl implements ManagerDAO{
             {
                 String[] info = line.split(splitBy);
                 if (info[3].equals(username)) {
-                    return new Manager(0, info[1], info[2], info[3], info[4], true, info[6]);
+                    return new Manager(0, info[1], info[2], info[3], info[4]);
                 }
             }
         } catch (FileNotFoundException e){

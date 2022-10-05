@@ -6,20 +6,27 @@ public class Reimbursement {
 
     private int ticketid;
 
+    private int employeeid;
+
     private double amount;
 
-    private String status;
+    private String handledby;
 
     private String description;
 
-    public Reimbursement(int ticketid, double amount, String status, String description) {
+    public Reimbursement(int ticketid, int employeeid, double amount, String handledby, String description) {
         this.ticketid = ticketid;
+        this.employeeid = employeeid;
         this.amount = amount;
-        this.status = status;
+        this.handledby = handledby;
         this.description = description;
     }
 
-    public Reimbursement() {
+    public Reimbursement(int ticketid, int employeeid, double amount, String handledby) {
+        this.ticketid = ticketid;
+        this.employeeid = employeeid;
+        this.amount = amount;
+        this.handledby = handledby;
     }
 
     public int getTicketid() {
@@ -30,6 +37,14 @@ public class Reimbursement {
         this.ticketid = ticketid;
     }
 
+    public int getEmployeeid() {
+        return employeeid;
+    }
+
+    public void setEmployeeid(int employeeid) {
+        this.employeeid = employeeid;
+    }
+
     public double getAmount() {
         return amount;
     }
@@ -38,12 +53,12 @@ public class Reimbursement {
         this.amount = amount;
     }
 
-    public String getStatus() {
-        return status;
+    public String getHandledby() {
+        return handledby;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setHandledby(String handledby) {
+        this.handledby = handledby;
     }
 
     public String getDescription() {
@@ -58,8 +73,9 @@ public class Reimbursement {
     public String toString() {
         return "Reimbursement{" +
                 "ticketid=" + ticketid +
+                ", employeeid=" + employeeid +
                 ", amount=" + amount +
-                ", status='" + status + '\'' +
+                ", handledby='" + handledby + '\'' +
                 ", description='" + description + '\'' +
                 '}';
     }
@@ -69,11 +85,11 @@ public class Reimbursement {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Reimbursement that = (Reimbursement) o;
-        return ticketid == that.ticketid && Double.compare(that.amount, amount) == 0 && Objects.equals(status, that.status) && Objects.equals(description, that.description);
+        return ticketid == that.ticketid && employeeid == that.employeeid && Double.compare(that.amount, amount) == 0 && Objects.equals(handledby, that.handledby) && Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ticketid, amount, status, description);
+        return Objects.hash(ticketid, employeeid, amount, handledby, description);
     }
 }

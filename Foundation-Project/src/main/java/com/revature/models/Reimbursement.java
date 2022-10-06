@@ -1,45 +1,50 @@
 package com.revature.models;
 
-import java.util.List;
 import java.util.Objects;
 
-public class Reimbursement implements List<Reimbursement> {
+public class Reimbursement {
 
-    private int ticketid;
-
-    private int employeeid;
+    private int requestid;
 
     private double amount;
 
-    private String handledby;
+    private  String status = "Pending";
 
     private String description;
 
-    public Reimbursement(int ticketid, int employeeid, double amount, String handledby, int handled_by, String description) {
-        this.ticketid = ticketid;
-        this.employeeid = employeeid;
-        this.amount = amount;
-        this.handledby = handledby;
-        this.description = description;
-    }
+    private int handledby;
+
+    private Employee employee;
+
+    private Manager manager;
 
     public Reimbursement() {
     }
 
-    public int getTicketid() {
-        return ticketid;
+    public Reimbursement(int requestid, double amount, String status, String description,  Employee employee, int handledby) {
+        this.requestid = requestid;
+        this.amount = amount;
+        this.status = status;
+        this.description = description;
+        this.employee = employee;
+        this.handledby = handledby;
     }
 
-    public void setTicketid(int ticketid) {
-        this.ticketid = ticketid;
+    public Reimbursement(int requestid, double amount, String status, String description, int handledby, Manager manager) {
+        this.requestid = requestid;
+        this.amount = amount;
+        this.status = status;
+        this.description = description;
+        this.handledby = handledby;
+        this.manager = manager;
     }
 
-    public int getEmployeeid() {
-        return employeeid;
+    public int getRequestid() {
+        return requestid;
     }
 
-    public void setEmployeeid(int employeeid) {
-        this.employeeid = employeeid;
+    public void setRequestid(int requestid) {
+        this.requestid = requestid;
     }
 
     public double getAmount() {
@@ -50,12 +55,12 @@ public class Reimbursement implements List<Reimbursement> {
         this.amount = amount;
     }
 
-    public String getHandledby() {
-        return handledby;
+    public String getStatus() {
+        return status;
     }
 
-    public void setHandledby(String handledby) {
-        this.handledby = handledby;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getDescription() {
@@ -66,14 +71,40 @@ public class Reimbursement implements List<Reimbursement> {
         this.description = description;
     }
 
+    public int getHandledby() {
+        return handledby;
+    }
+
+    public void setHandledby(int handledby) {
+        this.handledby = handledby;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public Manager getManager() {
+        return manager;
+    }
+
+    public void setManager(Manager manager) {
+        this.manager = manager;
+    }
+
     @Override
     public String toString() {
         return "Reimbursement{" +
-                "ticketid=" + ticketid +
-                ", employeeid=" + employeeid +
+                "ticketid=" + requestid +
                 ", amount=" + amount +
-                ", handledby='" + handledby + '\'' +
+                ", status='" + status + '\'' +
                 ", description='" + description + '\'' +
+                ", handledby=" + handledby +
+                ", employee=" + employee +
+                ", manager=" + manager +
                 '}';
     }
 
@@ -82,11 +113,11 @@ public class Reimbursement implements List<Reimbursement> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Reimbursement that = (Reimbursement) o;
-        return ticketid == that.ticketid && employeeid == that.employeeid && Double.compare(that.amount, amount) == 0 && Objects.equals(handledby, that.handledby) && Objects.equals(description, that.description);
+        return requestid == that.requestid && Double.compare(that.amount, amount) == 0 && handledby == that.handledby && Objects.equals(status, that.status) && Objects.equals(description, that.description) && Objects.equals(employee, that.employee) && Objects.equals(manager, that.manager);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ticketid, employeeid, amount, handledby, description);
+        return Objects.hash(requestid, amount, status, description, handledby, employee, manager);
     }
 }

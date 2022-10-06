@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeeDAOImplPostgress implements EmployeeDAO{
+public class EmployeeDAOImplPostgres implements EmployeeDAO{
     @Override
     public Employee getByUsername(String username) {
 
@@ -62,7 +62,7 @@ public class EmployeeDAOImplPostgress implements EmployeeDAO{
 
                 rs.next();
 
-                int id = rs.getInt("ID");
+                int id = rs.getInt("employee_id");
                 String receivedFirst = rs.getString("first");
                 String receivedLast = rs.getString("last");
                 String receivedEmail = rs.getString("email");
@@ -80,7 +80,7 @@ public class EmployeeDAOImplPostgress implements EmployeeDAO{
     }
 
     @Override
-    public List<Employee> getAllEmployee() {
+    public List<Employee> getAllEmployees() {
         Connection conn = ConnectionUtil.getConnection();
 
         List<Employee> employees = new ArrayList<>();
@@ -93,7 +93,7 @@ public class EmployeeDAOImplPostgress implements EmployeeDAO{
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()){
-                int id = rs.getInt("ID");
+                int id = rs.getInt("employee_id");
                 String first = rs.getString("first");
                 String last = rs.getString("last");
                 String email = rs.getString("email");

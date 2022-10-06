@@ -2,6 +2,12 @@ package com.revature.dao;
 
 import com.revature.models.Manager;
 
+import java.util.List;
+
 public interface ManagerDAO {
     Manager getByUsername(String username);
+
+    Manager createManager(String name, String email, String username, String password);
+
+    List<Manager> getManager();
 }

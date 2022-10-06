@@ -1,5 +1,7 @@
 package com.revature.dao;
 
+import com.revature.models.Employee;
+import com.revature.models.Manager;
 import com.revature.models.Reimbursement;
 import com.revature.util.ConnectionUtil;
 
@@ -9,38 +11,52 @@ import java.util.List;
 
 public class ReimbursementDAOImplPostgres implements ReimbursementDAO{
     @Override
-    public Reimbursement createRequest(int employeeid, int amount, String handledby, String description) {
+    public Reimbursement createRequest(Employee employee, double amount, String description) {
+        Reimbursement reimbursement = new Reimbursement();
+        try (Connection conn = ConnectionUtil.getConnection()){
+            String sql = "INSERT INTO Reimbursement (employee_id, amount, status, description) VALUES (?,?,?,?) RETURNING *";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, employee.getEmployeeId());
+            stmt.setDouble(2, amount);
+            stmt.setString(3, "Pending");
+            stmt.setString(4, description);
+            ResultSet rs;
+            if ((rs = stmt.executeQuery()) != null){
+                rs.next();
+                int id = rs.getInt("request_id");
+                double requestedamount = rs.getDouble("amount");
+                String status = rs.getString("status");
+                String reason = rs.getString("description");
+                int handledby = rs.getInt("handled_by");
+                return new Reimbursement(id, requestedamount, status, reason, employee, handledby);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
-
     @Override
-    public List<Reimbursement> getAllReimbursement() {
-
-        Connection conn = ConnectionUtil.getConnection();
-
+    public List<Reimbursement> viewAllReimbursement(Manager manager) {
         List<Reimbursement> reimbursements = new ArrayList<>();
-
-        try {
+        Employee employee = new Employee();
+        try (Connection conn = ConnectionUtil.getConnection()){
             Statement stmt = conn.createStatement();
-            // My Logic should go inside here
-            String sql = "SELECT * FROM teachers";
-
-            // Run the statement
+            String sql = "SELECT * FROM Reimbursement NATURAL JOIN Emplopyee";
             ResultSet rs = stmt.executeQuery(sql);
-
-
             while (rs.next()) {
-                int id = rs.getInt("id");
-                int employee_id = rs.getInt("employee_id");
-                int amount = rs.getInt("Amount");
+                int id = rs.getInt("request_id");
+                double amount = rs.getDouble("amount");
                 String status = rs.getString("status");
-                int handled_by = rs.getInt("handled_by");
                 String description = rs.getString("description");
-
-
-                Reimbursement reimburs = new Reimbursement(id, employee_id, amount, status, handled_by, description);
-
-                reimbursements.add(reimburs);
+                int handledby = rs.getInt("handled_by");
+                employee.setEmployeeId(rs.getInt("employee_id"));
+                employee.setFirst(rs.getString("first"));
+                employee.setLast(rs.getString("last"));
+                employee.setEmail(rs.getString("email"));
+                employee.setUsername(rs.getString("user_name"));
+                employee.setPassword(rs.getString("password"));
+                Reimbursement reimburse = new Reimbursement(id, amount, status, description, employee , handledby);
+                reimbursements.add(reimburse);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -49,16 +65,16 @@ public class ReimbursementDAOImplPostgres implements ReimbursementDAO{
     }
 
     @Override
-    public List<Reimbursement> getReimbursementByEmployeeId(int employeeid) {
-        Reimbursement reimburse = new Reimbursement();
+    public List<Reimbursement> viewMyRequests(Employee employee) {
+        List<Reimbursement> reimbursement = new ArrayList<>();
 
         try (Connection conn = ConnectionUtil.getConnection()){
 
-            String sql = "SELECT * from reimbursement where Employee ID = ?";
+            String sql = "SELECT * FROM Reimbursement WHERE employee_id = ?";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
 
-            stmt.setString(1, String.valueOf(employeeid));
+            stmt.setInt(1, employee.getEmployeeId());
 
             ResultSet rs;
 
@@ -66,23 +82,51 @@ public class ReimbursementDAOImplPostgres implements ReimbursementDAO{
 
                 rs.next();
 
-                int id = rs.getInt("id");
+                int id = rs.getInt("request_id");
                 int employee_id = rs.getInt("employee_id");
-                int amount = rs.getInt("Amount");
+                double amount = rs.getDouble("amount");
                 String status = rs.getString("status");
-                int handled_by = rs.getInt("handled_by");
                 String description = rs.getString("description");
-
-                reimburse = new Reimbursement(id, employee_id, amount, status, handled_by, description);
+                int handled_by = rs.getInt("handled_by");
+                Reimbursement request = new Reimbursement(id, amount, status, description, employee, handled_by);
+                reimbursement.add(request);
             }
         } catch (SQLException e) {
             e.printStackTrace();
             }
-        return reimburse;
+        return reimbursement;
         }
 
     @Override
-    public boolean updateStatus(String status) {
-        return false;
+    public Reimbursement updateStatus(String status, int id, Manager manager) {
+        Reimbursement reimbursement = new Reimbursement();
+        try(Connection conn = ConnectionUtil.getConnection()){
+            String sql = "UPDATE Reimbursement SET status = ?";
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return reimbursement;
+    }
+
+    @Override
+    public Reimbursement getReimbursementById(int id, Manager manager){
+        Reimbursement reimbursement = new Reimbursement();
+        try(Connection conn = ConnectionUtil.getConnection()){
+            String sql = "SELECT * FROM Reimbursement WHERE request_id = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs;
+            if ((rs = stmt.executeQuery()) != null) {
+                rs.next();
+                int r_id = rs.getInt("request_id");
+                double amount = rs.getDouble("amount");
+                String status = rs.getString("status");
+                String description = rs.getString("description");
+                int handled_by = rs.getInt("handled_by");
+                Reimbursement request = new Reimbursement(r_id, amount, status, description, handled_by, manager);
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return reimbursement;
     }
 }

@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class ManagerDAOImpl implements ManagerDAO{
+/*public class ManagerDAOImpl implements ManagerDAO{
 
     String line = "";
     String splitBy = ",";
@@ -32,3 +32,5 @@ public class ManagerDAOImpl implements ManagerDAO{
         return null;
     }
 }
+
+ */

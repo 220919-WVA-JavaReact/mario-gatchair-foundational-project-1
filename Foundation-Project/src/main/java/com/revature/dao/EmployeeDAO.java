@@ -7,9 +7,7 @@ import java.util.List;
 public interface EmployeeDAO {
     Employee getByUsername(String username);
 
-
-
     Employee createEmployee(String first, String last, String email, String username, String password);
 
-    List<Employee> getAllEmployee();
+    List<Employee> getAllEmployees();
 }

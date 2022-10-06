@@ -1,16 +1,20 @@
 package com.revature.dao;
 
+import com.revature.models.Employee;
+import com.revature.models.Manager;
 import com.revature.models.Reimbursement;
 
 import java.io.ObjectInputFilter;
 import java.util.List;
 
 public interface ReimbursementDAO {
-    Reimbursement createRequest(int employeeid, int amount, String handledby, String description);
+    Reimbursement createRequest(Employee employee, double amount, String description);
 
-    List<Reimbursement> getAllReimbursement();
+    List<Reimbursement> viewAllReimbursement(Manager manager);
 
-    List<Reimbursement> getReimbursementByEmployeeId(int employeeid);
+    List<Reimbursement> viewMyRequests(Employee employee);
 
-    boolean updateStatus(String status);
+    Reimbursement getReimbursementById(int id, Manager manager);
+
+    Reimbursement updateStatus(String status, int id, Manager manager);
 }

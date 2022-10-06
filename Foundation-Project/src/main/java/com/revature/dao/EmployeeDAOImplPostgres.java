@@ -15,7 +15,7 @@ public class EmployeeDAOImplPostgres implements EmployeeDAO{
 
         try (Connection conn = ConnectionUtil.getConnection()){
 
-            String sql = "SELECT * FROM Employee where username = ?";
+            String sql = "SELECT * FROM Employee where user_name = ?";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
 
@@ -25,17 +25,19 @@ public class EmployeeDAOImplPostgres implements EmployeeDAO{
 
             if ((rs = stmt.executeQuery()) != null){
                 rs.next();
-                int id = rs.getInt("ID");
+                int id = rs.getInt("employee_id");
                 String first = rs.getString("first");
                 String last = rs.getString("last");
                 String email = rs.getString("email");
                 String receivedUsername = rs.getString("user_name");
                 String password = rs.getString("password");
 
-                employ = new Employee(id,first,last,email,username,password);
+                employ = new Employee(id,first,last,email,receivedUsername,password);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Invalid info please check your credentials or register");
+            System.out.println(e);//printStackTrace();
+            return null;
         }
         return employ;
     }

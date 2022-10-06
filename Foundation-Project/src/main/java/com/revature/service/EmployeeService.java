@@ -24,16 +24,13 @@ public class EmployeeService {
 
         Employee user = ed.getByUsername(username);
 
-        if (user.getPassword().equals(password)){
+        if (user != null && user.getPassword().equals(password)){
             System.out.println("You're signed in Welcome!");
-            System.out.println(user);
+            System.out.println("Welcome " + user.getFirst() + "! What do you want to do today?");
 
             return user;
-        } else{
-            System.out.println("Invalid info please check your credentials or register");
-
-            return null;
         }
+        return null;
     }
 
     public Employee register(){

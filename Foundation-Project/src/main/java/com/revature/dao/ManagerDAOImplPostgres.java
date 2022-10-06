@@ -15,7 +15,7 @@ public class ManagerDAOImplPostgres implements ManagerDAO {
 
         try (Connection conn = ConnectionUtil.getConnection()){
 
-            String sql = "SELECT * FROM Manager where username = ?";
+            String sql = "SELECT * FROM Manager where user_name = ?";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
 
@@ -34,7 +34,8 @@ public class ManagerDAOImplPostgres implements ManagerDAO {
                 manage = new Manager(id,name,email,username,password);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Invalid info please check your credentials or register");
+            System.out.println(e);//printStackTrace();
         }
         return manage;
     }
@@ -49,9 +50,9 @@ public class ManagerDAOImplPostgres implements ManagerDAO {
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             stmt.setString(1, name);
-            stmt.setString(3, email);
-            stmt.setString(4, username);
-            stmt.setString(5, password);
+            stmt.setString(2, email);
+            stmt.setString(3, username);
+            stmt.setString(4, password);
 
             ResultSet rs;
 

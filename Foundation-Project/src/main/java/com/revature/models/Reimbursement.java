@@ -39,6 +39,16 @@ public class Reimbursement {
         this.manager = manager;
     }
 
+    public Reimbursement(int requestid, double amount, String status, String description, int handledby, Employee employee, Manager manager) {
+        this.requestid = requestid;
+        this.amount = amount;
+        this.status = status;
+        this.description = description;
+        this.handledby = handledby;
+        this.employee = employee;
+        this.manager = manager;
+    }
+
     public int getRequestid() {
         return requestid;
     }

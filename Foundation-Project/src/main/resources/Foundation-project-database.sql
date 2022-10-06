@@ -18,7 +18,7 @@ CREATE TABLE Manager(
 CREATE TABLE Reimbursement(
 	request_id serial PRIMARY KEY,
 	employee_id int REFERENCES Employee,
-	amount money NOT NULL,
+	amount numeric NOT NULL,
 	status varchar(25),
 	description TEXT,
 	handled_by int REFERENCES Manager

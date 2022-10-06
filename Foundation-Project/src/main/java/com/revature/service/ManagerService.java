@@ -25,6 +25,7 @@ public class ManagerService {
 
         if (admin.getPassword().equals(password)){
             System.out.println("You're signed in Welcome!");
+            System.out.println("Welcome " + admin.getName() + "! What do you want to do today?");
             System.out.println(admin);
 
             return admin;

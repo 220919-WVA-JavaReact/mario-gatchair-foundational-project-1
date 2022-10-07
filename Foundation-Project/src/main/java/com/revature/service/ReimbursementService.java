@@ -61,7 +61,7 @@ public class ReimbursementService {
         if(choice == 1){
             status = "Approved";
         }
-        Reimbursement reimbursement1 = rb.updateStatus(status, reimbursement.getRequestid(), manager);
+        Reimbursement reimbursement1 = rb.updateStatus(status, ticketid, manager);
         if (!reimbursement1.getStatus().equals(reimbursement.getStatus())){
             System.out.println("Request has been updated");
         } else {

@@ -101,18 +101,22 @@ public class ReimbursementDAOImplPostgres implements ReimbursementDAO{
     public Reimbursement updateStatus(String status, int id, Manager manager) {
         Reimbursement reimbursement = new Reimbursement();
         try(Connection conn = ConnectionUtil.getConnection()){
-            String sql = "UPDATE Reimbursement SET status = ?, handled_by = ? WHERE request_id = ? RETURNING *";
+            String sql = "UPDATE Reimbursement r SET status = ?, handled_by = ? WHERE r.request_id = ? RETURNING *";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, id);
+            stmt.setString(1, status);
+            stmt.setInt(2, manager.getManagerId());
+            stmt.setInt(3, id);
             ResultSet rs;
-            if ((rs = stmt.executeUpdate());{
-                rs.next();
-                int r_id = rs.getInt("request_id");
-                double amount = rs.getDouble("amount");
-                String approvalstatus = rs.getString("status");
-                String description = rs.getString("description");
-                int handled_by = rs.getInt("handled_by");
-                Reimbursement reimbursement1 = new Reimbursement((r_id, amount, approvalstatus, description,handled_by)
+            if ((rs = stmt.executeQuery()) != null){
+                while (rs.next()) {
+                    int r_id = rs.getInt("request_id");
+                    System.out.println(r_id);
+                    double amount = rs.getDouble("amount");
+                    String approvalstatus = rs.getString("status");
+                    String description = rs.getString("description");
+                    int handled_by = rs.getInt("handled_by");
+                    reimbursement = new Reimbursement(r_id, amount, approvalstatus, description, handled_by, manager);
+                }
             }
         }catch (SQLException e) {
             e.printStackTrace();

@@ -35,5 +35,4 @@ INSERT INTO Manager ("name", email, user_name, "password") VALUES ('Veradis', 'v
 INSERT INTO Manager ("name", email, user_name, "password") VALUES ('Desdemona', 'dhorlock1@sphinn.com', 'dlowndsborough1', '7qlqT52iQz');
 INSERT INTO Manager ("name", email, user_name, "password") VALUES ('Nanon', 'nglanders2@cnn.com', 'nkilvington2', 'KfCPsjxBP4Q');
 
-INSERT INTO reimbursement
-VALUES ()
+UPDATE reimbursement SET status = 'approved', handled_by = 4 WHERE request_id = 5 RETURNING *;

@@ -110,4 +110,9 @@ public class EmployeeDAOImplPostgres implements EmployeeDAO{
         }
         return employees;
     }
+
+    @Override
+    public Employee promoteEmployee(int ind, String first, String last, String username, String password) {
+        return null;
+    }
 }

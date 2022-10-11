@@ -21,8 +21,10 @@ public class ReimbursementService {
         sc.nextLine();
         System.out.println("Enter your reason: ");
         String description = sc.nextLine();
+        System.out.println("Enter the type of reimbursement i.e. Travel, Lodging, Food, or other");
+        String type = sc.nextLine();
 
-        Reimbursement request = rb.createRequest(employee, amount, description);
+        Reimbursement request = rb.createRequest(employee, amount, description, type);
         return request;
     }
 
@@ -48,7 +50,7 @@ public class ReimbursementService {
         System.out.println("The following tickets need approval.");
         for(Reimbursement reimbursement : reimbursements){
             if (reimbursement.getStatus().equals("Pending")){
-                System.out.println(reimbursement.getStatus() + " * Ticket Id: " + reimbursement.getRequestid() + " || Amount: " + reimbursement.getAmount() + " || Reason:" + reimbursement.getDescription());
+                System.out.println(reimbursement.getStatus() + " * Ticket Id: " + reimbursement.getRequestid() + " || Amount: " + reimbursement.getAmount() + " || Reason:" + reimbursement.getDescription() + " || Type:" + reimbursement.getType());
             }
         }
         System.out.println("Enter ticket Id that you wish to update");
@@ -73,7 +75,7 @@ public class ReimbursementService {
     public Reimbursement getReimbursementById(int id, Manager manager){
         Reimbursement reimbursement = rb.getReimbursementById(id, manager);
         System.out.println(reimbursement.getStatus() + "Reimbursement request sent by:" + reimbursement.getEmployee().getUsername());
-        System.out.println("Amount requested: $" + reimbursement.getAmount() + "Reason given: " + reimbursement.getDescription());
+        System.out.println("Amount requested: $" + reimbursement.getAmount() + "Reason given: " + reimbursement.getDescription() + "Type: " + reimbursement.getType());
         return reimbursement;
     }
 

@@ -11,15 +11,16 @@ import java.util.List;
 
 public class ReimbursementDAOImplPostgres implements ReimbursementDAO{
     @Override
-    public Reimbursement createRequest(Employee employee, double amount, String description) {
+    public Reimbursement createRequest(Employee employee, double amount, String description, String type) {
         Reimbursement reimbursement = new Reimbursement();
         try (Connection conn = ConnectionUtil.getConnection()){
-            String sql = "INSERT INTO Reimbursement (employee_id, amount, status, description) VALUES (?,?,?,?) RETURNING *";
+            String sql = "INSERT INTO Reimbursement (employee_id, amount, status, description, type) VALUES (?,?,?,?,?) RETURNING *";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, employee.getEmployeeId());
             stmt.setDouble(2, amount);
             stmt.setString(3, "Pending");
             stmt.setString(4, description);
+            stmt.setString(5, type);
             ResultSet rs;
             if ((rs = stmt.executeQuery()) != null){
                 rs.next();
@@ -27,8 +28,9 @@ public class ReimbursementDAOImplPostgres implements ReimbursementDAO{
                 double requestedamount = rs.getDouble("amount");
                 String status = rs.getString("status");
                 String reason = rs.getString("description");
+                String category = rs.getString("type");
                 int handledby = rs.getInt("handled_by");
-                return new Reimbursement(id, requestedamount, status, reason, employee, handledby);
+                return new Reimbursement(id, requestedamount, status, reason, category, employee, handledby);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -48,6 +50,7 @@ public class ReimbursementDAOImplPostgres implements ReimbursementDAO{
                 double amount = rs.getDouble("amount");
                 String status = rs.getString("status");
                 String description = rs.getString("description");
+                String type = rs.getString("type");
                 int handledby = rs.getInt("handled_by");
                 employee.setEmployeeId(rs.getInt("employee_id"));
                 employee.setFirst(rs.getString("first"));
@@ -55,7 +58,7 @@ public class ReimbursementDAOImplPostgres implements ReimbursementDAO{
                 employee.setEmail(rs.getString("email"));
                 employee.setUsername(rs.getString("user_name"));
                 employee.setPassword(rs.getString("password"));
-                Reimbursement reimburse = new Reimbursement(id, amount, status, description, employee , handledby);
+                Reimbursement reimburse = new Reimbursement(id, amount, status, description, type, employee , handledby);
                 reimbursements.add(reimburse);
             }
         } catch (SQLException e) {
@@ -87,8 +90,9 @@ public class ReimbursementDAOImplPostgres implements ReimbursementDAO{
                 double amount = rs.getDouble("amount");
                 String status = rs.getString("status");
                 String description = rs.getString("description");
+                String type = rs.getString("type");
                 int handled_by = rs.getInt("handled_by");
-                Reimbursement request = new Reimbursement(id, amount, status, description, employee, handled_by);
+                Reimbursement request = new Reimbursement(id, amount, status, description, type, employee, handled_by);
                 reimbursement.add(request);
             }
         } catch (SQLException e) {
@@ -96,6 +100,34 @@ public class ReimbursementDAOImplPostgres implements ReimbursementDAO{
             }
         return reimbursement;
         }
+
+    @Override
+    public List<Reimbursement> viewRequestsByType(String type, Employee employee) {
+        List<Reimbursement> reimbursement = new ArrayList<>();
+
+        try (Connection conn = ConnectionUtil.getConnection()) {
+            String sql = "SELECT * FROM Reimbursement WHERE employee_id = ? AND status = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, employee.getEmployeeId());
+            stmt.setString(2, type);
+            ResultSet rs;
+            if ((rs = stmt.executeQuery()) != null) {
+                rs.next();
+
+                int id = rs.getInt("request_id");
+                double amount = rs.getDouble("amount");
+                String status = rs.getString("status");
+                String description = rs.getString("description");
+                String category = rs.getString("type");
+                int handled_by = rs.getInt("handled_by");
+                Reimbursement request = new Reimbursement(id, amount, status, description, type, employee, handled_by);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return reimbursement;
+    }
 
     @Override
     public Reimbursement updateStatus(String status, int id, Manager manager) {
@@ -114,8 +146,9 @@ public class ReimbursementDAOImplPostgres implements ReimbursementDAO{
                     double amount = rs.getDouble("amount");
                     String approvalstatus = rs.getString("status");
                     String description = rs.getString("description");
+                    String type = rs.getString("type");
                     int handled_by = rs.getInt("handled_by");
-                    reimbursement = new Reimbursement(r_id, amount, approvalstatus, description, handled_by, manager);
+                    reimbursement = new Reimbursement(r_id, amount, approvalstatus, description, type, handled_by, manager);
                 }
             }
         }catch (SQLException e) {
@@ -139,13 +172,14 @@ public class ReimbursementDAOImplPostgres implements ReimbursementDAO{
                 double amount = rs.getDouble("amount");
                 String status = rs.getString("status");
                 String description = rs.getString("description");
+                String type = rs.getString("type");
                 int handled_by = rs.getInt("handled_by");
                 emp.setEmployeeId(rs.getInt("employee_id"));
                 emp.setFirst(rs.getString("first"));
                 emp.setLast(rs.getString("last"));
                 emp.setEmail(rs.getString("email"));
                 emp.setUsername(rs.getString("user_name"));
-                Reimbursement request = new Reimbursement(r_id, amount, status, description, handled_by, emp, manager);
+                Reimbursement request = new Reimbursement(r_id, amount, status, description, type, handled_by, emp, manager);
             }
         }catch (SQLException e) {
             e.printStackTrace();

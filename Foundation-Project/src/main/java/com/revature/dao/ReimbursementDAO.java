@@ -8,11 +8,13 @@ import java.io.ObjectInputFilter;
 import java.util.List;
 
 public interface ReimbursementDAO {
-    Reimbursement createRequest(Employee employee, double amount, String description);
+    Reimbursement createRequest(Employee employee, double amount, String description, String type);
 
     List<Reimbursement> viewAllReimbursement(Manager manager);
 
     List<Reimbursement> viewMyRequests(Employee employee);
+
+    List<Reimbursement> viewRequestsByType(String type, Employee employee);
 
     Reimbursement getReimbursementById(int id, Manager manager);
 

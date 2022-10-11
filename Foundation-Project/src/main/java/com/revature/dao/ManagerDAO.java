@@ -10,4 +10,6 @@ public interface ManagerDAO {
     Manager createManager(String name, String email, String username, String password);
 
     List<Manager> getManager();
+
+    Manager demoteMananger(int id, String name, String email, String username, String password);
 }

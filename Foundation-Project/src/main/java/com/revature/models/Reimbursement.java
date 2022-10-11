@@ -12,6 +12,8 @@ public class Reimbursement {
 
     private String description;
 
+    private String type;
+
     private int handledby;
 
     private Employee employee;
@@ -21,29 +23,32 @@ public class Reimbursement {
     public Reimbursement() {
     }
 
-    public Reimbursement(int requestid, double amount, String status, String description,  Employee employee, int handledby) {
+    public Reimbursement(int requestid, double amount, String status, String description, String type, Employee employee, int handledby) {
         this.requestid = requestid;
         this.amount = amount;
         this.status = status;
         this.description = description;
+        this.type = type;
         this.employee = employee;
         this.handledby = handledby;
     }
 
-    public Reimbursement(int requestid, double amount, String status, String description, int handledby, Manager manager) {
+    public Reimbursement(int requestid, double amount, String status, String description, String type, int handledby, Manager manager) {
         this.requestid = requestid;
         this.amount = amount;
         this.status = status;
         this.description = description;
+        this.type =  type;
         this.handledby = handledby;
         this.manager = manager;
     }
 
-    public Reimbursement(int requestid, double amount, String status, String description, int handledby, Employee employee, Manager manager) {
+    public Reimbursement(int requestid, double amount, String status, String description, String type, int handledby, Employee employee, Manager manager) {
         this.requestid = requestid;
         this.amount = amount;
         this.status = status;
         this.description = description;
+        this.type = type;
         this.handledby = handledby;
         this.employee = employee;
         this.manager = manager;
@@ -81,6 +86,14 @@ public class Reimbursement {
         this.description = description;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public int getHandledby() {
         return handledby;
     }
@@ -112,6 +125,7 @@ public class Reimbursement {
                 ", amount=" + amount +
                 ", status='" + status + '\'' +
                 ", description='" + description + '\'' +
+                ", type ='" + type +
                 ", handledby=" + handledby +
                 ", employee=" + employee +
                 ", manager=" + manager +
@@ -123,11 +137,11 @@ public class Reimbursement {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Reimbursement that = (Reimbursement) o;
-        return requestid == that.requestid && Double.compare(that.amount, amount) == 0 && handledby == that.handledby && Objects.equals(status, that.status) && Objects.equals(description, that.description) && Objects.equals(employee, that.employee) && Objects.equals(manager, that.manager);
+        return requestid == that.requestid && Double.compare(that.amount, amount) == 0 && handledby == that.handledby && Objects.equals(status, that.status) && Objects.equals(description, that.description) && Objects.equals(type, that.type) && Objects.equals(employee, that.employee) && Objects.equals(manager, that.manager);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(requestid, amount, status, description, handledby, employee, manager);
+        return Objects.hash(requestid, amount, status, description, type, handledby, employee, manager);
     }
 }

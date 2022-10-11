@@ -10,4 +10,6 @@ public interface EmployeeDAO {
     Employee createEmployee(String first, String last, String email, String username, String password);
 
     List<Employee> getAllEmployees();
+
+    Employee promoteEmployee(int ind, String first, String last, String username, String password);
 }

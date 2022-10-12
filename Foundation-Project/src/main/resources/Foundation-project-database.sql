@@ -2,7 +2,7 @@ CREATE TABLE Employee(
 	employee_id serial PRIMARY KEY,
 	"first" varchar(40),
 	"last" varchar(40),
-	email varchar(40),
+	email varchar(40) NOT NULL unique,
 	user_name varchar(25) NOT NULL UNIQUE,
 	"password" varchar(30) NOT NULL
 );
@@ -11,7 +11,7 @@ CREATE TABLE Manager(
 	manager_id serial PRIMARY KEY,
 	"first" varchar(40),
 	"last" varchar(40),
-	email varchar(40),
+	email varchar(40) NOT NULL UNIQUE,
 	user_name varchar(25) NOT NULL UNIQUE,
 	"password" varchar(30) NOT NULL
 );

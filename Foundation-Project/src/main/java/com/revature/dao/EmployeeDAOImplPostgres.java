@@ -1,6 +1,7 @@
 package com.revature.dao;
 
 import com.revature.models.Employee;
+import com.revature.models.Manager;
 import com.revature.util.ConnectionUtil;
 
 import java.sql.*;
@@ -47,7 +48,7 @@ public class EmployeeDAOImplPostgres implements EmployeeDAO{
 
         Employee employee = new Employee();
 
-        try(Connection conn = ConnectionUtil.getConnection()){
+        try (Connection conn = ConnectionUtil.getConnection()){
             String sql = "INSERT INTO Employee (first, last, email, user_name, password) VALUES (?,?,?,?,?) RETURNING *";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -73,10 +74,9 @@ public class EmployeeDAOImplPostgres implements EmployeeDAO{
 
                 employee = new Employee(id, receivedFirst, receivedLast, receivedEmail, receivedUsername, receivedPassword);
             }
-
-        }catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Couldn't register user to the database");
+        } catch (SQLException e) {
+            System.out.println("User already exists couldn't register user to the database.");
+            System.out.println("Please register with valid credentials.");
         }
         return employee;
     }
@@ -113,6 +113,25 @@ public class EmployeeDAOImplPostgres implements EmployeeDAO{
 
     @Override
     public Employee promoteEmployee(int ind, String first, String last, String username, String password) {
-        return null;
+        Employee employee = new Employee();
+        try (Connection conn = ConnectionUtil.getConnection()){
+            String sql = "INSERT INTO manager SELECT * FROM employee WHERE user_name = ? RETURNING *";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()){
+                int id = rs.getInt("employee_id");
+                String empfirst = rs.getString("first");
+                String emplast = rs.getString("last");
+                String email = rs.getString("email");
+                String empusername = rs.getString("user_name");
+                String empassword = rs.getString("password");
+                Employee employee1 = new Manager(id, empfirst, emplast, email, empusername, empassword);
+            }
+
+        } catch (SQLException e) {
+           e.printStackTrace();
+        }
+        return employee1;
     }
 }

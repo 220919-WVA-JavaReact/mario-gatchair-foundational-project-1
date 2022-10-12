@@ -26,12 +26,13 @@ public class ManagerDAOImplPostgres implements ManagerDAO {
             if ((rs = stmt.executeQuery()) != null){
                 rs.next();
                 int id = rs.getInt("manager_id");
-                String name = rs.getString("name");
+                String first = rs.getString("first");
+                String last = rs.getString("last");
                 String email = rs.getString("email");
                 String receivedUsername = rs.getString("user_name");
                 String password = rs.getString("password");
 
-                manage = new Manager(id,name,email,username,password);
+                manage = new Manager(id,first, last,email,username,password);
             }
         } catch (SQLException e) {
             System.out.println("Invalid info please check your credentials or register");
@@ -41,18 +42,19 @@ public class ManagerDAOImplPostgres implements ManagerDAO {
     }
 
     @Override
-    public Manager createManager(String name, String email, String username, String password) {
+    public Manager createManager(String first, String last, String email, String username, String password) {
         Manager manager = new Manager();
 
         try (Connection conn = ConnectionUtil.getConnection()){
-            String sql = "INSERT INTO Manager (name, email, user_name, password) VALUES (?,?,?,?) RETURNING *";
+            String sql = "INSERT INTO Manager (first, last, email, user_name, password) VALUES (?,?,?,?,?) RETURNING *";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
 
-            stmt.setString(1, name);
-            stmt.setString(2, email);
-            stmt.setString(3, username);
-            stmt.setString(4, password);
+            stmt.setString(1, first);
+            stmt.setString(2, last);
+            stmt.setString(3, email);
+            stmt.setString(4, username);
+            stmt.setString(5, password);
 
             ResultSet rs;
 
@@ -61,12 +63,13 @@ public class ManagerDAOImplPostgres implements ManagerDAO {
                 rs.next();
 
                 int id = rs.getInt("manager_id");
-                String receivedname = rs.getString("name");
+                String receivedfirst = rs.getString("first");
+                String receivedlast = rs.getString("last");
                 String receivedEmail = rs.getString("email");
                 String receivedUsername = rs.getString("user_name");
                 String receivedPassword = rs.getString("password");
 
-                manager = new Manager(id, receivedname, receivedEmail, receivedUsername, receivedPassword);
+                manager = new Manager(id, receivedfirst, receivedlast, receivedEmail, receivedUsername, receivedPassword);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -90,12 +93,13 @@ public class ManagerDAOImplPostgres implements ManagerDAO {
 
             while (rs.next()){
                 int id = rs.getInt("manager_id");
-                String name = rs.getString("name");
+                String first = rs.getString("first");
+                String last = rs.getString("last");
                 String email = rs.getString("email");
                 String username = rs.getString("user_name");
                 String password = rs.getString("password");
 
-                Manager manage = new Manager(id, name, email, username, password);
+                Manager manage = new Manager(id, first, last, email, username, password);
                 managers.add(manage);
             }
         }catch (SQLException e) {

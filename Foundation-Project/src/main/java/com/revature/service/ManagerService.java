@@ -25,7 +25,7 @@ public class ManagerService {
 
         if (admin.getPassword().equals(password)){
             System.out.println("You're signed in Welcome!");
-            System.out.println("Welcome " + admin.getName() + "! What do you want to do today?");
+            System.out.println("Welcome " + admin.getFirst() + "! What do you want to do today?");
             System.out.println(admin);
 
             return admin;
@@ -39,8 +39,10 @@ public class ManagerService {
     public Manager register() {
         System.out.println("Register");
         System.out.println("-------------------------------------------------");
-        System.out.println("Please enter your name");
-        String name = sc.nextLine();
+        System.out.println("Please enter your first name");
+        String first = sc.nextLine();
+        System.out.println("Please enter your last name");
+        String last = sc.nextLine();
         System.out.println("Please enter your email");
         String email = sc.nextLine();
         System.out.println("Please enter your username");
@@ -48,7 +50,7 @@ public class ManagerService {
         System.out.println("Please enter your password");
         String password = sc.nextLine();
 
-        Manager manager = mn.createManager(name, email, username, password);
+        Manager manager = mn.createManager(first, last, email, username, password);
         return manager;
     }
 }

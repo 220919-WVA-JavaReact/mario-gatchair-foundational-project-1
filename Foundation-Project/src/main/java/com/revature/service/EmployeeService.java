@@ -16,7 +16,7 @@ public class EmployeeService {
     public Employee login(){
 
         System.out.println("Login");
-        System.out.println("-------------------------------------------------");
+        System.out.println("*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=");
         System.out.println("Please enter your username");
         String username = sc.nextLine();
         System.out.println("Please enter your password");
@@ -34,8 +34,8 @@ public class EmployeeService {
     }
 
     public Employee register(){
-        System.out.println("Register");
-        System.out.println("-------------------------------------------------");
+        System.out.println("Let's get startred with your Registration");
+        System.out.println("*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=");
         System.out.println("Please enter your first name");
         String first = sc.nextLine();
         System.out.println("Please enter your last name");
@@ -48,6 +48,11 @@ public class EmployeeService {
         String password = sc.nextLine();
 
         Employee employee = ed.createEmployee(first, last, email, username, password);
-        return employee;
+        if(employee.getEmployeeId() != 0){
+            System.out.println("Thank you so much for registering!");
+            System.out.println("*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=");
+            return employee;
+        }
+        return null;
     }
 }

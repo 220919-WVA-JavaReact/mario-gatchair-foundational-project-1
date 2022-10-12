@@ -13,71 +13,89 @@ public class App {
     public static EmployeeService es = new EmployeeService();
     public static ReimbursementService rs = new ReimbursementService();
     public static ManagerService ms = new ManagerService();
+
     public static void main(String[] args) {
-        Employee loggedinEmployee = null;
-        Manager loggedinManager = null;
-        Reimbursement request = null;
-        // the start-up
-        System.out.println("Welcome to Revature's Employee Reimbursement Service");
-        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------");
-        System.out.println("Press 1 for Employee login, Press 2 for Employee Registration, Press 3 for Manager login or Press 4 for Manager Registration");
-        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        Employee loggedE = null;
+        Manager loggedM = null;
+        Reimbursement rqst = null;
+        boolean programrunning = true;
         Scanner sc = new Scanner(System.in);
-        String choice = sc.nextLine();
-            while (!choice.equals("1") && !choice.equals("2") && !choice.equals("3") && !choice.equals("4")) {
+        // the start-up
+
+        while (programrunning) {
+            System.out.println("Welcome to Revature's Employee Reimbursement Service");
+            System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.println("Press 1 for Employee Options, Press 2 for Manager Options or Press 0 to exit");
+            System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            String choice = sc.nextLine();
+            while (!choice.equals("1") && !choice.equals("2") && !choice.equals("0")) {
                 System.out.println("Invalid input");
                 choice = sc.nextLine();
             }
-            switch (choice) {
-                case "1":
-                    loggedinEmployee = es.login();
-                    break;
-                case "2":
-                    loggedinEmployee = es.register();
-                    break;
-                case "3":
-                    loggedinManager = ms.login();
-                    break;
-                case "4":
-                    loggedinManager = ms.register();
-                    break;
-            }
-        while (loggedinEmployee != null || loggedinManager != null) {
-            if (loggedinEmployee != null) {
-                System.out.println("Press 1 to view Request, Press 2 to Create a new a Request");
-                String subchoice = sc.nextLine();
-                switch (subchoice) {
+            if (choice.equals("1")) {
+                System.out.println("Welcome Employee, what would you like to do?");
+                System.out.println("1) Login");
+                System.out.println("2) Register");
+                System.out.println("*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*=*=*=*=");
+
+                String response = sc.nextLine();
+                switch (response) {
                     case "1":
-                        rs.viewMyRequests(loggedinEmployee);
+                        loggedE = es.login();
+                        if (loggedE != null) {
+                            System.out.println("1) View Pending Reimbursement");
+                            System.out.println("2) Create a new Reimbursement");
+                            System.out.println("*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=");
+                            String employchoice = sc.nextLine();
+                            switch (employchoice) {
+                                case "1":
+                                    rs.viewMyRequests(loggedE);
+                                    break;
+                                case "2":
+                                    rs.createRequest(loggedE);
+                                    break;
+                            }
+                            break;
+                        }
                         break;
                     case "2":
-                        rs.createRequest(loggedinEmployee);
-                        break;
-                    case "3":
-                        loggedinEmployee = null;
+                        loggedE = es.register();
                         break;
                     default:
-                        System.out.println("Invalid input");
-                        break;
+                        System.out.println("Sorry I don't understand that input. Try again.");
                 }
-            } else if (loggedinManager != null) {
-                System.out.println("Press 1 to View Pending Requests, Press 2 to approve or deny pending requests");
-                String subchoice = sc.nextLine();
-                switch (subchoice) {
+            } else if (choice.equals("2")) {
+                System.out.println("Welcome Administrator, what would you like to do?");
+                System.out.println("1) Login");
+                System.out.println("2) Adjust Employee Status");
+                System.out.println("*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*=*=*=*=");
+
+                String response = sc.nextLine();
+                switch (response) {
                     case "1":
-                        rs.viewAllRequests(loggedinManager);
-                        break;
-                    case "2":
-                        rs.updateStatus(loggedinManager);
-                        break;
-                    case "3":
-                        loggedinManager = null;
-                        break;
-                    default:
-                        System.out.println("Invalid input");
-                        break;
+                        loggedM = ms.login();
+                        if (loggedM != null) {
+                            System.out.println("1) View All Reimbursement");
+                            System.out.println("2) Approve or Deny Reimbursements");
+                            System.out.println("*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=");
+                            String manemploy = sc.nextLine();
+                            switch (manemploy) {
+                                case "1":
+                                    rs.viewAllRequests(loggedM);
+                                    break;
+                                case "2":
+                                    rs.updateStatus(loggedM);
+                                    break;
+                                default:
+                                    System.out.println("Sorry I don't understand that input. Try again.");
+                            }
+                        }
                 }
+            } else if (choice.equals("0")) {
+                System.out.println("Ending Program");
+                programrunning = false;
             }
+
         }
     }
 }

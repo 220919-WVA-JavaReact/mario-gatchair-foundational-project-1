@@ -42,4 +42,4 @@ UPDATE reimbursement SET status = 'approved', handled_by = 4 WHERE request_id = 
 
 INSERT INTO manager
 SELECT * FROM employee 
-WHERE 
+WHERE ("first", "last", email, user_name, "password");

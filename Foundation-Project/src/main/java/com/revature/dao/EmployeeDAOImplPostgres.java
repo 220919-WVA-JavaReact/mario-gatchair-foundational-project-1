@@ -111,7 +111,7 @@ public class EmployeeDAOImplPostgres implements EmployeeDAO{
         return employees;
     }
 
-    @Override
+    /*@Override
     public Employee promoteEmployee(int ind, String first, String last, String username, String password) {
         Employee employee = new Employee();
         try (Connection conn = ConnectionUtil.getConnection()){
@@ -133,5 +133,5 @@ public class EmployeeDAOImplPostgres implements EmployeeDAO{
            e.printStackTrace();
         }
         return employee1;
-    }
+    }*/
 }

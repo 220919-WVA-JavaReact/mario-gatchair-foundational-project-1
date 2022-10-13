@@ -1,4 +1,4 @@
-package com.revature.util;
+package com.revature.servlets;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 //Whenever we want to create a servlet we'll extend the HttpServlet abstract class to handle our methods
-public class Servlet extends HttpServlet {
+public class Welcome extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         System.out.println("[LOG] - SanityServlet received a request at " + LocalDateTime.now());
@@ -19,6 +19,6 @@ public class Servlet extends HttpServlet {
         resp.setStatus(200);
         resp.setHeader("Content-type", "text/plain");
         resp.setHeader("example-response-header", "some-example-value");
-        resp.getWriter().write("This is the response payload");
+        resp.getWriter().write("This is the homepage!");
     }
 }

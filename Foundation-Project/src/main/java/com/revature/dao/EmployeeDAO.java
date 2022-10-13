@@ -11,5 +11,5 @@ public interface EmployeeDAO {
 
     List<Employee> getAllEmployees();
 
-   Employee promoteEmployee(int ind, String first, String last, String username, String password);
+   //Employee promoteEmployee(int ind, String first, String last, String username, String password);
 }

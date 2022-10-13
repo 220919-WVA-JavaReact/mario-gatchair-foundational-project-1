@@ -42,9 +42,10 @@ public class App {
                 switch (response) {
                     case "1":
                         loggedE = es.login();
-                        if (loggedE != null) {
+                        while (loggedE != null) {
                             System.out.println("1) View Pending Reimbursement");
                             System.out.println("2) Create a new Reimbursement");
+                            System.out.println("3) Logout");
                             System.out.println("*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=");
                             String employchoice = sc.nextLine();
                             switch (employchoice) {
@@ -54,8 +55,14 @@ public class App {
                                 case "2":
                                     rs.createRequest(loggedE);
                                     break;
+                                case "0":
+                                    loggedE = null;
+                                    System.out.println("Signing out!");
+                                    break;
+                                default:
+                                    System.out.println("Sorry I don't understand that input. Try again.");
+                                    break;
                             }
-                            break;
                         }
                         break;
                     case "2":
@@ -63,6 +70,7 @@ public class App {
                         break;
                     default:
                         System.out.println("Sorry I don't understand that input. Try again.");
+                        break;
                 }
             } else if (choice.equals("2")) {
                 System.out.println("Welcome Administrator, what would you like to do?");
@@ -74,9 +82,10 @@ public class App {
                 switch (response) {
                     case "1":
                         loggedM = ms.login();
-                        if (loggedM != null) {
+                        while (loggedM != null) {
                             System.out.println("1) View All Reimbursement");
                             System.out.println("2) Approve or Deny Reimbursements");
+                            System.out.println("3) Logout");
                             System.out.println("*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=");
                             String manemploy = sc.nextLine();
                             switch (manemploy) {
@@ -88,6 +97,10 @@ public class App {
                                     break;
                                 default:
                                     System.out.println("Sorry I don't understand that input. Try again.");
+                                case "0":
+                                    loggedM = null;
+                                    System.out.println("Signing out!");
+                                    break;
                             }
                         }
                 }

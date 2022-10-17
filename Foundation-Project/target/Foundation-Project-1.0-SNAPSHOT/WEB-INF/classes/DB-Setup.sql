@@ -26,7 +26,7 @@ CREATE TABLE Reimbursement(
 	handled_by int REFERENCES Manager
 );
 
-	
+
 INSERT INTO Employee ("first", "last", email, user_name, "password") VALUES ('Jule', 'Ropartz', 'jropartz0@indiatimes.com', 'jropartz0', 'iZcoUSbSE');
 INSERT INTO Employee ("first", "last", email, user_name, "password") VALUES ('Teresita', 'Putland', 'tputland1@nifty.com', 'tputland1', 'tVwR6Kqa');
 INSERT INTO Employee ("first", "last", email, user_name, "password") VALUES ('Leora', 'Berk', 'lberk2@canalblog.com', 'lberk2', 'OY21oB0');
@@ -41,5 +41,5 @@ INSERT INTO manager ("first", "last", email, user_name, "password") VALUES ('Mar
 UPDATE reimbursement SET status = 'approved', handled_by = 4 WHERE request_id = 5 RETURNING *;
 
 INSERT INTO manager
-SELECT * FROM employee 
+SELECT * FROM employee
 WHERE ("first", "last", email, user_name, "password");

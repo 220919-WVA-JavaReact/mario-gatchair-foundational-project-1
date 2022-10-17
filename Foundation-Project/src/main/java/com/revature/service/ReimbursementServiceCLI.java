@@ -9,7 +9,7 @@ import com.revature.models.Reimbursement;
 import java.util.List;
 import java.util.Scanner;
 
-public class ReimbursementService {
+public class ReimbursementServiceCLI {
     ReimbursementDAO rb = new ReimbursementDAOImplPostgres();
     Scanner sc = new Scanner(System.in);
 
@@ -79,4 +79,7 @@ public class ReimbursementService {
         return reimbursement;
     }
 
+    public void getReimbursementByType(Employee employee, String type) {
+
+    }
 }

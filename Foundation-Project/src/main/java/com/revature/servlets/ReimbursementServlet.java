@@ -1,30 +1,27 @@
 package com.revature.servlets;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.revature.models.Employee;
-import com.revature.service.EmployeeServiceAPI;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.List;
 
-@WebServlet("/employee")
-public class EmployeeServlet extends HttpServlet {
-    EmployeeServiceAPI employapi = new EmployeeServiceAPI();
-    ObjectMapper obmap = new ObjectMapper();
-    List<Employee> employees;
+@WebServlet("/reimbursement")
+public class ReimbursementServlet extends HttpServlet{
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-        HttpSession session = req.getSession(false);
-        if (session != null) {
-            Employee loggedE = (Employee) session.getAttribute("auth-user");
-            if
-        }
+        System.out.println("[LOG] - SanityServlet received a request at " + LocalDateTime.now());
+        System.out.println("[LOG] - Request URI: " + req.getRequestURI());
+        System.out.println("[LOG] - Request Method: " + req.getMethod());
+        System.out.println("[LOG] - Request Header, example: " + req.getHeader("example"));
+
+        resp.setStatus(200);
+        resp.setHeader("Content-type", "text/plain");
+        resp.setHeader("example-response-header", "some-example-value");
+        resp.getWriter().write("This is the ticket page!");
     }
 
     @Override

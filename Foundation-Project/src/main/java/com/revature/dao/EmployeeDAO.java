@@ -9,7 +9,8 @@ public interface EmployeeDAO {
 
     Employee createEmployee(String first, String last, String email, String username, String password);
 
-    List<Employee> getAllEmployees();
+    List<Employee> getAllEmployees(Employee loggedE);
 
    //Employee promoteEmployee(int ind, String first, String last, String username, String password);
+    boolean existingEmployee(String username);
 }

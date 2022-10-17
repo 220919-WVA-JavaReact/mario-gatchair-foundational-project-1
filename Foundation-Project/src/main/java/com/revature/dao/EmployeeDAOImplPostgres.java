@@ -82,7 +82,7 @@ public class EmployeeDAOImplPostgres implements EmployeeDAO{
     }
 
     @Override
-    public List<Employee> getAllEmployees() {
+    public List<Employee> getAllEmployees(Employee loggedE) {
         Connection conn = ConnectionUtil.getConnection();
 
         List<Employee> employees = new ArrayList<>();
@@ -109,6 +109,21 @@ public class EmployeeDAOImplPostgres implements EmployeeDAO{
             e.printStackTrace();
         }
         return employees;
+    }
+
+    @Override
+    public boolean existingEmployee(String username) {
+        try (Connection conn = ConnectionUtil.getConnection()){
+            String sql = "SELECT * FROM employee WHERE user_name = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            if ((stmt.executeQuery()) != null) {
+                return true;
+            }
+        } catch (SQLException e){
+            return false;
+        }
+        return false;
     }
 
     /*@Override

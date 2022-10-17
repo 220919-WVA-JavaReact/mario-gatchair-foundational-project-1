@@ -3,16 +3,16 @@ package com.revature;
 import com.revature.models.Employee;
 import com.revature.models.Manager;
 import com.revature.models.Reimbursement;
-import com.revature.service.EmployeeService;
-import com.revature.service.ManagerService;
-import com.revature.service.ReimbursementService;
+import com.revature.service.EmployeeServiceCLI;
+import com.revature.service.ManagerServiceCLI;
+import com.revature.service.ReimbursementServiceCLI;
 
 import java.util.Scanner;
 
 public class App {
-    public static EmployeeService es = new EmployeeService();
-    public static ReimbursementService rs = new ReimbursementService();
-    public static ManagerService ms = new ManagerService();
+    public static EmployeeServiceCLI es = new EmployeeServiceCLI();
+    public static ReimbursementServiceCLI rs = new ReimbursementServiceCLI();
+    public static ManagerServiceCLI ms = new ManagerServiceCLI();
 
     public static void main(String[] args) {
         Employee loggedE = null;

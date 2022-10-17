@@ -130,6 +130,16 @@ public class ReimbursementDAOImplPostgres implements ReimbursementDAO{
     }
 
     @Override
+    public List<Reimbursement> getReimbursementByType(Employee employee, String type) {
+        return null;
+    }
+
+    @Override
+    public List<Reimbursement> getReimbursementByStatus(String status) {
+        return null;
+    }
+
+    @Override
     public Reimbursement updateStatus(String status, int id, Manager manager) {
         Reimbursement reimbursement = new Reimbursement();
         try(Connection conn = ConnectionUtil.getConnection()){

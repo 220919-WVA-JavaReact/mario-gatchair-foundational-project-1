@@ -7,7 +7,7 @@ import com.revature.models.Manager;
 
 import java.util.Scanner;
 
-public class ManagerService {
+public class ManagerServiceCLI {
     ManagerDAO mn = new ManagerDAOImplPostgres();
 
     Scanner sc = new Scanner(System.in);

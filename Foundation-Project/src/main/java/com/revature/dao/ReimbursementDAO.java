@@ -16,7 +16,12 @@ public interface ReimbursementDAO {
 
     List<Reimbursement> viewRequestsByType(String type, Employee employee);
 
+    List<Reimbursement> getReimbursementByType(Employee employee, String type);
+
+    List<Reimbursement> getReimbursementByStatus(String status);
+
     Reimbursement getReimbursementById(int id, Manager manager);
 
     Reimbursement updateStatus(String status, int id, Manager manager);
+
 }

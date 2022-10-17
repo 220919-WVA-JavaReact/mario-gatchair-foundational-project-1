@@ -1,8 +1,12 @@
 package com.revature.util;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
+
 
 public class ConnectionUtil {
 
@@ -23,17 +27,31 @@ public class ConnectionUtil {
             return null;
             }
 
-        String url = System.getenv("url");
+        String url = "";
         String username = System.getenv("username");
         String password = System.getenv("password");
+        Properties props = new Properties();
 
         try {
+            props.load(new FileReader("src/main/resources/application.properties"));
+            url = props.getProperty("url");
+            username = props.getProperty("username");
+            password = props.getProperty("password");
             conn = DriverManager.getConnection(url, username, password);
-            System.out.println("Established Connection to Database!");
         } catch (SQLException e) {
             System.out.println("Could not establish connection");
             e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         return conn;
+    }
+    static {
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e){
+            System.out.println("Failed to load PostgreSQL Driver");
+            throw new RuntimeException(e);
+        }
     }
 }

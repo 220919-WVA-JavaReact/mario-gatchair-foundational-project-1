@@ -28,6 +28,11 @@ public class Employee {
     public Employee() {
     }
 
+    public Employee(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public int getEmployeeId() {
         return employeeId;
     }
@@ -76,15 +81,6 @@ public class Employee {
         this.password = password;
     }
 
-    public String toJsonString(){
-        return "{\"employeeId\":" + "," +
-                "\"first\":\"" + first + "\", " +
-                "\"last\":\"" + last + "\", " +
-                "\"email\":\"" + email + "\", " +
-                "\"username\":\"" + username + "\", " +
-                "\"password\":\"" + password + "\", " +
-                "}";
-    }
     @Override
     public String toString() {
         return "Employee{" +

@@ -28,12 +28,12 @@ public class ConnectionUtil {
             }
 
         String url = "";
-        String username = System.getenv("username");
-        String password = System.getenv("password");
+        String username ="";
+        String password ="";
         Properties props = new Properties();
 
         try {
-            props.load(new FileReader("src/main/resources/application.properties"));
+            props.load(new FileReader("C:\\Users\\Mario\\Documents\\Revature\\mario-gatchair-foundational-project-1\\Foundation-Project\\src\\main\\resources\\application.properties"));
             url = props.getProperty("url");
             username = props.getProperty("username");
             password = props.getProperty("password");

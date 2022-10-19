@@ -11,22 +11,9 @@ import java.time.LocalDateTime;
 @WebServlet("/manager")
 public class ManagerServlet extends HttpServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-        System.out.println("[LOG] - SanityServlet received a request at " + LocalDateTime.now());
-        System.out.println("[LOG] - Request URI: " + req.getRequestURI());
-        System.out.println("[LOG] - Request Method: " + req.getMethod());
-        System.out.println("[LOG] - Request Header, example: " + req.getHeader("example"));
-
-        resp.setStatus(200);
-        resp.setHeader("Content-type", "text/plain");
-        resp.setHeader("example-response-header", "some-example-value");
-        resp.getWriter().write("This is the manager page!");
-    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
     }
 
     @Override

@@ -15,15 +15,14 @@ public class EmployeeDAOImplPostgres implements EmployeeDAO{
         try (Connection conn = ConnectionUtil.getConnection()){
             String sql = "SELECT * FROM employee WHERE username = ?";
             System.out.println(username);
-//            assert conn != null;
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
             ResultSet rs;
             if ((rs = stmt.executeQuery()) != null){
                 if (rs.next()) {
                     int id = rs.getInt("ID");
-                    String first = rs.getString("first name");
-                    String last = rs.getString("last name");
+                    String first = rs.getString("first");
+                    String last = rs.getString("last");
                     String email = rs.getString("email");
                     String receivedUsername = rs.getString("username");
                     String password = rs.getString("password");
@@ -44,7 +43,7 @@ public class EmployeeDAOImplPostgres implements EmployeeDAO{
         Employee employee = new Employee();
 
         try (Connection conn = ConnectionUtil.getConnection()){
-            String sql = "INSERT INTO Employee ('first name', 'last name', email, username, password) VALUES (?,?,?,?,?) RETURNING *";
+            String sql = "INSERT INTO employee (first, last, email, username, password) VALUES (?,?,?,?,?) RETURNING *";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
 
@@ -61,8 +60,8 @@ public class EmployeeDAOImplPostgres implements EmployeeDAO{
                 rs.next();
 
                 int id = rs.getInt("ID");
-                String receivedFirst = rs.getString("first name");
-                String receivedLast = rs.getString("last name");
+                String receivedFirst = rs.getString("first");
+                String receivedLast = rs.getString("last");
                 String receivedEmail = rs.getString("email");
                 String receivedUsername = rs.getString("username");
                 String receivedPassword = rs.getString("password");
@@ -70,8 +69,9 @@ public class EmployeeDAOImplPostgres implements EmployeeDAO{
                 employee = new Employee(id, receivedFirst, receivedLast, receivedEmail, receivedUsername, receivedPassword);
             }
         } catch (SQLException e) {
-            System.out.println("User already exists couldn't register user to the database.");
+//            System.out.println("User already exists couldn't register user to the database.");
             System.out.println("Please register with valid credentials.");
+            e.printStackTrace();
         }
         return employee;
     }
@@ -91,8 +91,8 @@ public class EmployeeDAOImplPostgres implements EmployeeDAO{
 
             while (rs.next()){
                 int id = rs.getInt("ID");
-                String first = rs.getString("first name");
-                String last = rs.getString("last name");
+                String first = rs.getString("first");
+                String last = rs.getString("last");
                 String email = rs.getString("email");
                 String username = rs.getString("username");
                 String password = rs.getString("password");
@@ -106,20 +106,20 @@ public class EmployeeDAOImplPostgres implements EmployeeDAO{
         return employees;
     }
 
-    @Override
-    public boolean existingEmployee(String username) {
-        try (Connection conn = ConnectionUtil.getConnection()){
-            String sql = "SELECT * FROM employee WHERE username = ?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, username);
-            if ((stmt.executeQuery()) != null) {
-                return true;
-            }
-        } catch (SQLException e){
-            return false;
-        }
-        return false;
-    }
+//    @Override
+//    public boolean existingEmployee(String username) {
+//        try (Connection conn = ConnectionUtil.getConnection()){
+//            String sql = "SELECT * FROM employee WHERE username = ?";
+//            PreparedStatement stmt = conn.prepareStatement(sql);
+//            stmt.setString(1, username);
+//            if ((stmt.executeQuery()) != null) {
+//                return true;
+//            }
+//        } catch (SQLException e){
+//            return false;
+//        }
+//        return false;
+//    }
 
     /*@Override
     public Employee promoteEmployee(int ind, String first, String last, String username, String password) {
@@ -131,8 +131,8 @@ public class EmployeeDAOImplPostgres implements EmployeeDAO{
             ResultSet rs = stmt.executeQuery();
             while (rs.next()){
                 int id = rs.getInt("ID");
-                String empfirst = rs.getString("first name");
-                String emplast = rs.getString("last name");
+                String empfirst = rs.getString("first");
+                String emplast = rs.getString("last");
                 String email = rs.getString("email");
                 String empusername = rs.getString("username");
                 String empassword = rs.getString("password");

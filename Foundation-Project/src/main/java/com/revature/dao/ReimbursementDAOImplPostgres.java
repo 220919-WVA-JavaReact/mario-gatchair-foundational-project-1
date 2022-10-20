@@ -24,7 +24,7 @@ public class ReimbursementDAOImplPostgres implements ReimbursementDAO{
             ResultSet rs;
             if ((rs = stmt.executeQuery()) != null){
                 rs.next();
-                int id = rs.getInt("request_id");
+                int id = rs.getInt("ID");
                 double requestedamount = rs.getDouble("amount");
                 String status = rs.getString("status");
                 String reason = rs.getString("description");
@@ -46,7 +46,7 @@ public class ReimbursementDAOImplPostgres implements ReimbursementDAO{
             String sql = "SELECT * FROM Reimbursement NATURAL JOIN Employee";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                int id = rs.getInt("request_id");
+                int id = rs.getInt("ID");
                 double amount = rs.getDouble("amount");
                 String status = rs.getString("status");
                 String description = rs.getString("description");
@@ -56,7 +56,7 @@ public class ReimbursementDAOImplPostgres implements ReimbursementDAO{
                 employee.setFirst(rs.getString("first"));
                 employee.setLast(rs.getString("last"));
                 employee.setEmail(rs.getString("email"));
-                employee.setUsername(rs.getString("user_name"));
+                employee.setUsername(rs.getString("username"));
                 employee.setPassword(rs.getString("password"));
                 Reimbursement reimburse = new Reimbursement(id, amount, status, description, type, employee , handledby);
                 reimbursements.add(reimburse);
@@ -85,7 +85,7 @@ public class ReimbursementDAOImplPostgres implements ReimbursementDAO{
 
                 rs.next();
 
-                int id = rs.getInt("request_id");
+                int id = rs.getInt("ID");
                 int employee_id = rs.getInt("employee_id");
                 double amount = rs.getDouble("amount");
                 String status = rs.getString("status");
@@ -114,7 +114,7 @@ public class ReimbursementDAOImplPostgres implements ReimbursementDAO{
             if ((rs = stmt.executeQuery()) != null) {
                 rs.next();
 
-                int id = rs.getInt("request_id");
+                int id = rs.getInt("ID");
                 double amount = rs.getDouble("amount");
                 String status = rs.getString("status");
                 String description = rs.getString("description");
@@ -143,7 +143,7 @@ public class ReimbursementDAOImplPostgres implements ReimbursementDAO{
     public Reimbursement updateStatus(String status, int id, Manager manager) {
         Reimbursement reimbursement = new Reimbursement();
         try(Connection conn = ConnectionUtil.getConnection()){
-            String sql = "UPDATE Reimbursement r SET status = ?, handled_by = ? WHERE r.request_id = ? RETURNING *";
+            String sql = "UPDATE Reimbursement r SET status = ?, handled_by = ? WHERE r.ID = ? RETURNING *";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, status);
             stmt.setInt(2, manager.getManagerId());
@@ -151,7 +151,7 @@ public class ReimbursementDAOImplPostgres implements ReimbursementDAO{
             ResultSet rs;
             if ((rs = stmt.executeQuery()) != null){
                 while (rs.next()) {
-                    int r_id = rs.getInt("request_id");
+                    int r_id = rs.getInt("ID");
                     System.out.println(r_id);
                     double amount = rs.getDouble("amount");
                     String approvalstatus = rs.getString("status");
@@ -172,13 +172,13 @@ public class ReimbursementDAOImplPostgres implements ReimbursementDAO{
         Reimbursement reimbursement = new Reimbursement();
         Employee emp = new Employee();
         try(Connection conn = ConnectionUtil.getConnection()){
-            String sql = "SELECT * FROM Reimbursement r NATURAL JOIN Employee e WHERE r.request_id = ?";
+            String sql = "SELECT * FROM Reimbursement r NATURAL JOIN Employee e WHERE r.ID = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, id);
             ResultSet rs;
             if ((rs = stmt.executeQuery()) != null) {
                 rs.next();
-                int r_id = rs.getInt("request_id");
+                int r_id = rs.getInt("ID");
                 double amount = rs.getDouble("amount");
                 String status = rs.getString("status");
                 String description = rs.getString("description");
@@ -188,7 +188,7 @@ public class ReimbursementDAOImplPostgres implements ReimbursementDAO{
                 emp.setFirst(rs.getString("first"));
                 emp.setLast(rs.getString("last"));
                 emp.setEmail(rs.getString("email"));
-                emp.setUsername(rs.getString("user_name"));
+                emp.setUsername(rs.getString("username"));
                 Reimbursement request = new Reimbursement(r_id, amount, status, description, type, handled_by, emp, manager);
             }
         }catch (SQLException e) {

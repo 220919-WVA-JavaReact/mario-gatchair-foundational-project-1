@@ -8,12 +8,12 @@
     <!-- For each servlet I'll need to define two things
         the servlet itself and the mapping of the servlet -->
     <servlet>
-        <servlet-name>Welcome</servlet-name>
-        <servlet-class>com.revature.servlets.Welcome</servlet-class>
+        <servlet-name>Sanity</servlet-name>
+        <servlet-class>com.revature.servlets.Sanity</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>Welcome</servlet-name>
+        <servlet-name>Sanity</servlet-name>
         <url-pattern>/homepage</url-pattern>
     </servlet-mapping>
 </web-app>

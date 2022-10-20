@@ -32,7 +32,7 @@ public class ReimbursementServiceCLI {
         List<Reimbursement> reimbursements = rb.viewMyRequests(employee);
         if (reimbursements.size() > 0) {
             for(Reimbursement reimbursement : reimbursements) {
-                System.out.println(reimbursement);
+                System.out.println(reimbursement.getStatus() + " * Ticket Id: " + reimbursement.getRequestid() + " || Amount: " + reimbursement.getAmount() + " || Reason:" + reimbursement.getDescription() + " || Type:" + reimbursement.getType());
             }
         } else {
             System.out.println("You have no requests");
@@ -42,7 +42,7 @@ public class ReimbursementServiceCLI {
     public void viewAllRequests(Manager manager){
         List<Reimbursement> reimbursements = rb.viewAllReimbursement(manager);
         for(Reimbursement reimbursement : reimbursements){
-            System.out.println(reimbursement);
+            System.out.println(reimbursement.getStatus() + " * Ticket Id: " + reimbursement.getRequestid() + " || Amount: " + reimbursement.getAmount() + " || Reason:" + reimbursement.getDescription() + " || Type:" + reimbursement.getType());
         }
     }
     public Reimbursement updateStatus(Manager manager){

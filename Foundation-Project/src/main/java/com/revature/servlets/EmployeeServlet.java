@@ -1,7 +1,9 @@
 package com.revature.servlets;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.models.Employee;
+import com.revature.models.Reimbursement;
 import com.revature.service.EmployeeServiceAPI;
+import com.revature.service.ReimbursementServiceAPI;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,22 +17,15 @@ import java.util.List;
 
 @WebServlet("/employee")
 public class EmployeeServlet extends HttpServlet {
-    EmployeeServiceAPI employapi = new EmployeeServiceAPI();
-    ObjectMapper obmap = new ObjectMapper();
-    List<Employee> employees;
-//    @Override
-//    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-//        resp.setContentType("application/json");
-//        HttpSession session = req.getSession(false);
-//        if (session != null) {
-//            Employee loggedE = (Employee) session.getAttribute("auth-user");
-//            if(loggedE.getUsername(employees))
-//        }
-//    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("[LOG] - EmployeeServlet");;
+
     }
 
     @Override

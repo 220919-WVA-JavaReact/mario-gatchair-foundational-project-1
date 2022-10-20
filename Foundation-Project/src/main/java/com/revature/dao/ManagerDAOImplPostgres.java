@@ -15,7 +15,7 @@ public class ManagerDAOImplPostgres implements ManagerDAO {
 
         try (Connection conn = ConnectionUtil.getConnection()){
 
-            String sql = "SELECT * FROM Manager where user_name = ?";
+            String sql = "SELECT * FROM Manager where username = ?";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
 
@@ -25,11 +25,11 @@ public class ManagerDAOImplPostgres implements ManagerDAO {
 
             if ((rs = stmt.executeQuery()) != null){
                 rs.next();
-                int id = rs.getInt("manager_id");
+                int id = rs.getInt("ID");
                 String first = rs.getString("first");
                 String last = rs.getString("last");
                 String email = rs.getString("email");
-                String receivedUsername = rs.getString("user_name");
+                String receivedUsername = rs.getString("username");
                 String password = rs.getString("password");
 
                 manage = new Manager(id,first, last,email,username,password);
@@ -46,7 +46,7 @@ public class ManagerDAOImplPostgres implements ManagerDAO {
         Manager manager = new Manager();
 
         try (Connection conn = ConnectionUtil.getConnection()){
-            String sql = "INSERT INTO Manager (first, last, email, user_name, password) VALUES (?,?,?,?,?) RETURNING *";
+            String sql = "INSERT INTO Manager (first, last, email, username, password) VALUES (?,?,?,?,?) RETURNING *";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
 
@@ -62,11 +62,11 @@ public class ManagerDAOImplPostgres implements ManagerDAO {
 
                 rs.next();
 
-                int id = rs.getInt("manager_id");
+                int id = rs.getInt("ID");
                 String receivedfirst = rs.getString("first");
                 String receivedlast = rs.getString("last");
                 String receivedEmail = rs.getString("email");
-                String receivedUsername = rs.getString("user_name");
+                String receivedUsername = rs.getString("username");
                 String receivedPassword = rs.getString("password");
 
                 manager = new Manager(id, receivedfirst, receivedlast, receivedEmail, receivedUsername, receivedPassword);
@@ -92,11 +92,11 @@ public class ManagerDAOImplPostgres implements ManagerDAO {
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()){
-                int id = rs.getInt("manager_id");
+                int id = rs.getInt("ID");
                 String first = rs.getString("first");
                 String last = rs.getString("last");
                 String email = rs.getString("email");
-                String username = rs.getString("user_name");
+                String username = rs.getString("username");
                 String password = rs.getString("password");
 
                 Manager manage = new Manager(id, first, last, email, username, password);

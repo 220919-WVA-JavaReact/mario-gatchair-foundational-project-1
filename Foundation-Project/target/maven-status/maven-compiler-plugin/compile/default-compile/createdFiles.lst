@@ -1,5 +1,5 @@
 com\revature\service\ManagerServiceCLI.class
-com\revature\servlets\AuthServlet.class
+com\revature\servlets\LoginServlet.class
 com\revature\models\Reimbursement.class
 com\revature\App.class
 com\revature\servlets\EmployeeServlet.class
@@ -10,12 +10,12 @@ com\revature\dao\ManagerDAO.class
 com\revature\dao\EmployeeDAO.class
 com\revature\dao\ManagerDAOImplPostgres.class
 com\revature\models\Manager.class
+com\revature\servlets\Sanity.class
 com\revature\servlets\ManagerServlet.class
 com\revature\util\ConnectionUtil.class
 com\revature\service\EmployeeServiceCLI.class
 com\revature\service\ManagerServicesAPI.class
 com\revature\service\ReimbursementServiceAPI.class
-com\revature\servlets\Welcome.class
 com\revature\service\EmployeeServiceAPI.class
 com\revature\service\ReimbursementServiceCLI.class
 com\revature\dao\EmployeeDAOImplPostgres.class

@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/auth")
-public class AuthServlet extends HttpServlet {
+@WebServlet("/login")
+public class LoginServlet extends HttpServlet {
 
     EmployeeServiceAPI employapi = new EmployeeServiceAPI();
     ManagerServicesAPI manageapi = new ManagerServicesAPI();
@@ -35,25 +35,25 @@ public class AuthServlet extends HttpServlet {
                 String payload = obmap.writeValueAsString(employ);
                 if (payload.equals("null")) {
                     resp.setStatus(400);
-                    resp.getWriter().write("This username isn't registered, please try again.");
+                    resp.getWriter().write("Invalid credentials!");
                 } else {
                     session = req.getSession();
                     session.setAttribute("auth-user", employ);
                     resp.setStatus(200);
-                    resp.getWriter().write(payload);
+                    resp.getWriter().write("Welcome " + employ.getFirst() + "! What do you want to do today?");
                 }
-            } else {
+            } else if(req.getParameter("type").equals("manager")) {
                 Manager manager = obmap.readValue(req.getInputStream(), Manager.class);
                 Manager manage = manageapi.login(manager.getUsername(), manager.getPassword());
                 String payload = obmap.writeValueAsString(manage);
                 if (payload.equals("null")){
                     resp.setStatus(400);
-                    resp.getWriter().write("This Administrator does not exist!");
+                    resp.getWriter().write("Invalid credentials!");
                 } else {
                     session = req.getSession();
                     session.setAttribute("auth-user", manage);
                     resp.setStatus(200);
-                    resp.getWriter().write(payload);
+                    resp.getWriter().write("Welcomeback " + manage.getFirst() + "! What do you want to do today?");
                 }
             }
         } else if (req.getParameter("action").equals("register")) {
@@ -64,11 +64,26 @@ public class AuthServlet extends HttpServlet {
                 if (!respPayload.equals("null")) {
                     session = req.getSession();
                     session.setAttribute("auth-user", employee1);
-                    resp.setStatus(200);
-                    resp.getWriter().write(respPayload);
+                    resp.setStatus(201);
+                    resp.getWriter().write("Welcome and thank you for signing up!");
                 } else {
                     resp.setStatus(400);
                     resp.getWriter().write("Username already in use!");
+                }
+            } else if (req.getParameter("action").equals("register")) {
+                if (req.getParameter("type").equals("manager")) {
+                    Manager manager = obmap.readValue(req.getInputStream(), Manager.class);
+                    Manager manage1 = manageapi.register(manager.getFirst(), manager.getLast(), manager.getEmail(), manager.getUsername(), manager.getPassword());
+                    String respPayloadM = obmap.writeValueAsString(manage1);
+                    if (!respPayloadM.equals("null")) {
+                        session = req.getSession();
+                        session.setAttribute("auth-user", manage1);
+                        resp.setStatus(201);
+                        resp.getWriter().write("Thanks for joining Management!");
+                    } else {
+                        resp.setStatus(400);
+                        resp.getWriter().write("User already exists");
+                    }
                 }
             }
         }
@@ -79,6 +94,7 @@ public class AuthServlet extends HttpServlet {
         HttpSession session = req.getSession(false);
         if (session != null) {
             session.invalidate();
+            resp.setStatus(200);
             resp.getWriter().write("You've been signed out!");
         }
     }

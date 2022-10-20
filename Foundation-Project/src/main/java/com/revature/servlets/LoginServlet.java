@@ -34,7 +34,7 @@ public class LoginServlet extends HttpServlet {
                 Employee employ = employapi.login(employee.getUsername(), employee.getPassword());
                 String payload = obmap.writeValueAsString(employ);
                 if (payload.equals("null")) {
-                    resp.setStatus(400);
+                    resp.setStatus(401);
                     resp.getWriter().write("Invalid credentials!");
                 } else {
                     session = req.getSession();
@@ -47,13 +47,13 @@ public class LoginServlet extends HttpServlet {
                 Manager manage = manageapi.login(manager.getUsername(), manager.getPassword());
                 String payload = obmap.writeValueAsString(manage);
                 if (payload.equals("null")){
-                    resp.setStatus(400);
+                    resp.setStatus(401);
                     resp.getWriter().write("Invalid credentials!");
                 } else {
                     session = req.getSession();
                     session.setAttribute("auth-user", manage);
                     resp.setStatus(200);
-                    resp.getWriter().write("Welcomeback " + manage.getFirst() + "! What do you want to do today?");
+                    resp.getWriter().write("Welcome back " + manage.getFirst() + "! What do you want to do today?");
                 }
             }
         } else if (req.getParameter("action").equals("register")) {
@@ -67,7 +67,7 @@ public class LoginServlet extends HttpServlet {
                     resp.setStatus(201);
                     resp.getWriter().write("Welcome and thank you for signing up!");
                 } else {
-                    resp.setStatus(400);
+                    resp.setStatus(401);
                     resp.getWriter().write("Username already in use!");
                 }
             } else if (req.getParameter("action").equals("register")) {
@@ -81,7 +81,7 @@ public class LoginServlet extends HttpServlet {
                         resp.setStatus(201);
                         resp.getWriter().write("Thanks for joining Management!");
                     } else {
-                        resp.setStatus(400);
+                        resp.setStatus(401);
                         resp.getWriter().write("User already exists");
                     }
                 }

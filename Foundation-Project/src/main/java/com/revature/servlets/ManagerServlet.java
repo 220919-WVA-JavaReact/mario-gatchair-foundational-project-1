@@ -25,36 +25,47 @@ public class ManagerServlet extends HttpServlet {
     ObjectMapper obmap = new ObjectMapper();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("application");
+        resp.setContentType("application/json");
         HttpSession session = req.getSession(false);
         if (session != null) {
             Manager manager = (Manager) session.getAttribute("auth-user");
-            if (req.getParameter("action").equals("view")){
-                List<Reimbursement> allrslist = rsapi.viewAllRequest(manager);
-                if (allrslist.size() < 1 ){
-                    resp.getWriter().write("There are no requests at this moment");
-                } else {
-                    String collection = obmap.writeValueAsString(allrslist);
-                    resp.getWriter().write(collection);
+            if (req.getParameter("action").equals("view")) {
+                List<Reimbursement> allRsList = rsapi.viewAllRequest(manager);
+                for (Reimbursement reimbursement : allRsList) {
+                    if (req.getParameter("status").equals("Pending")) {
+                        if (reimbursement.getStatus().equals("Pending")) {
+                            resp.getWriter().write(reimbursement.getStatus());
+                            resp.getWriter().write("Request ID: " + reimbursement.getRequestid() + " " + " | " + " ");
+                            resp.getWriter().write("Amount:  " + reimbursement.getAmount() + " " + " | " + " ");
+                            resp.getWriter().write("Description: " + reimbursement.getDescription() + " " + " | " + " ");
+                            resp.getWriter().write("Type: " + reimbursement.getType() + " " + " | " + " \n");
+                            resp.setStatus(200);
+                        }
+                    } else if (req.getParameter("status").equals("Approved")) {
+                        if (reimbursement.getStatus().equals("Approved")) {
+                            resp.getWriter().write(reimbursement.getStatus());
+                            resp.getWriter().write("Request ID: " + reimbursement.getRequestid() + " " + " | " + " ");
+                            resp.getWriter().write("Amount:  " + reimbursement.getAmount() + " " + " | " + " ");
+                            resp.getWriter().write("Description: " + reimbursement.getDescription() + " " + " | " + " ");
+                            resp.getWriter().write("Type: " + reimbursement.getType() + " " + " | " + "\n");
+                            resp.setStatus(200);
+                        }
+                    } else if (req.getParameter("status").equals("Denied")) {
+                        if (reimbursement.getStatus().equals("Denied")) {
+                            resp.getWriter().write(reimbursement.getStatus());
+                            resp.getWriter().write("Request ID: " + reimbursement.getRequestid() + " " + " | " + " ");
+                            resp.getWriter().write("Amount:  " + reimbursement.getAmount() + " " + " | " + " ");
+                            resp.getWriter().write("Description: " + reimbursement.getDescription() + " " + " | " + " ");
+                            resp.getWriter().write("Type: " + reimbursement.getType() + " " + " | " + "\n");
+                            resp.setStatus(200);
+                        }
+                    }
                 }
-            }else {
-                if (req.getParameter("status").equals("Pending")) {
-                    List<Reimbursement> reimbursements = rsapi.getByStatus("Pending");
-                    String payload = obmap.writeValueAsString(reimbursements);
-                    resp.getWriter().write(payload);
-                    resp.setStatus(200);
-                } else if (req.getParameter("status").equals("Approved")) {
-                    List<Reimbursement> reimbursements = rsapi.getByStatus("Approved");
-                    String payload = obmap.writeValueAsString(reimbursements);
-                    resp.getWriter().write(payload);
-                    resp.setStatus(200);
-                } else if (req.getParameter("status").equals("Denied")) {
-                    List<Reimbursement> reimbursements = rsapi.getByStatus("Denied");
-                    String payload = obmap.writeValueAsString(reimbursements);
-                    resp.getWriter().write(payload);
-                    resp.setStatus(200);
-                }
+
             }
+
+        } else {
+            resp.setStatus(401);
         }
     }
 

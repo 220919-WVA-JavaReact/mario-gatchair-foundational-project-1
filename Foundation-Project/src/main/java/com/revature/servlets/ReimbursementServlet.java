@@ -45,7 +45,7 @@ public class ReimbursementServlet extends HttpServlet{
                                 resp.getWriter().write("Request ID: " + reimbursement.getRequestid() + " " + " | " + " ");
                                 resp.getWriter().write("Amount:  " + reimbursement.getAmount() + " " + " | " + " ");
                                 resp.getWriter().write("Description: " + reimbursement.getDescription() + " " + " | " + " ");
-                                resp.getWriter().write("Type: " + reimbursement.getType() + " " + " | " + " ");
+                                resp.getWriter().write("Type: " + reimbursement.getType() + " " + " | " + "\n");
                                 resp.setStatus(200);
                         } else if (req.getParameter("status").equals("Denied")) {
                                 if (reimbursement.getStatus().equals("Denied")) {
@@ -53,7 +53,7 @@ public class ReimbursementServlet extends HttpServlet{
                                     resp.getWriter().write("Request ID: " + reimbursement.getRequestid() + " " + " | " + " ");
                                     resp.getWriter().write("Amount:  " + reimbursement.getAmount() + " " + " | " + " ");
                                     resp.getWriter().write("Description: " + reimbursement.getDescription() + " " + " | " + " ");
-                                    resp.getWriter().write("Type: " + reimbursement.getType() + " " + " | " + " ");
+                                    resp.getWriter().write("Type: " + reimbursement.getType() + " " + " | " + "\n");
                                     resp.setStatus(200);
                                 }
                             }
@@ -73,16 +73,16 @@ public class ReimbursementServlet extends HttpServlet{
             Reimbursement reimbursement = obmap.readValue(req.getInputStream(), Reimbursement.class);
             if (reimbursement.getAmount() <= 0 || String.valueOf(reimbursement.getAmount()).equals("")) {
                 resp.getWriter().write("You must have enter in a valid expense amount");
-                resp.setStatus(400);
-            } else if (reimbursement.getDescription().equals("")) {
+                resp.setStatus(403);
+            } else if (reimbursement.getDescription().trim().equals("")) {
                 resp.getWriter().write("You must enter a valid explanation and cannot be blanked");
-                resp.setStatus(400);
-            } else if (reimbursement.getType().equals("")) {
+                resp.setStatus(403);
+            } else if (reimbursement.getType().trim().equals("")) {
                 resp.getWriter().write("Type can not be empty.");
-                resp.setStatus(400);
+                resp.setStatus(403);
             } else if (!reimbursement.getType().equals("Travel") && !reimbursement.getType().equals("Lodging") && !reimbursement.getType().equals("Food") && !reimbursement.getType().equals("Other")){
             resp.getWriter().write("Type must be either 'Travel', 'Lodging', 'Food' or 'Other");
-            resp.setStatus(400);
+            resp.setStatus(403);
             } else {
                 Reimbursement payload = rsapi.createRequest(loggedE, reimbursement.getAmount(), reimbursement.getDescription(), reimbursement.getType());
                 resp.getWriter().write(obmap.writeValueAsString(payload));
@@ -111,8 +111,8 @@ public class ReimbursementServlet extends HttpServlet{
                 } else if (req.getParameter("action").equals("deny")){
                     if (reimbursement.getStatus().equals("Pending")){
                         String respPayload = obmap.writeValueAsString(reimbursement);
-                        String request = String.valueOf(rsapi.updateStatus("Deny", reimbursement.getRequestid(), loggedM));
-                        resp.getWriter().write("Ticket Deny");
+                        String request = String.valueOf(rsapi.updateStatus("Denied", reimbursement.getRequestid(), loggedM));
+                        resp.getWriter().write("Ticket Denied");
                         resp.setStatus(200);
                     } else {
                         resp.setStatus(400);

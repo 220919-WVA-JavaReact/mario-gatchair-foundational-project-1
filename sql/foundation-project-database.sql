@@ -21,8 +21,8 @@ CREATE TABLE Reimbursement(
 	employee_id int REFERENCES Employee,
 	amount numeric NOT NULL,
 	status varchar(25),
-	description TEXT,
-	"type" varchar(25),
+	description TEXT NOT null,
+	"type" varchar(25) NOT NULL,
 	handled_by int REFERENCES Manager
 );
 

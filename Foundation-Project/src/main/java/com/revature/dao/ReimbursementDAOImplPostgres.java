@@ -79,11 +79,11 @@ public class ReimbursementDAOImplPostgres implements ReimbursementDAO{
 
             stmt.setInt(1, employee.getEmployeeId());
 
-            ResultSet rs;
+            ResultSet rs = stmt.executeQuery();
 
-            if ((rs = stmt.executeQuery()) != null) {
+            while (rs.next()) {
 
-                rs.next();
+
 
                 int id = rs.getInt("ID");
                 int employee_id = rs.getInt("employee_id");

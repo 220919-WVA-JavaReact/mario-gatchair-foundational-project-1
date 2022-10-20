@@ -60,6 +60,21 @@ public class Reimbursement {
         this.description = description;
     }
 
+    public Reimbursement(String status, int handledby, Manager manager) {
+        this.status = status;
+        this.handledby = handledby;
+        this.manager = manager;
+    }
+
+    public Reimbursement(String status, Manager manager) {
+        this.status = status;
+        this.manager = manager;
+    }
+
+    public Reimbursement(String status) {
+        this.status = status;
+    }
+
     public int getRequestid() {
         return requestid;
     }

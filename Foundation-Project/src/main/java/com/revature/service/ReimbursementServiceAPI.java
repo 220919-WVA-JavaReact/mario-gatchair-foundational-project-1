@@ -23,9 +23,8 @@ public class ReimbursementServiceAPI {
         List<Reimbursement> tickets = rb.viewMyRequests(employee);
         return tickets;
     }
-    public List <Reimbursement> updateStatus(String status, int id, Manager manager){
-        List<Reimbursement> tickets = rb.viewAllReimbursement(manager);
-        return tickets;
+    public Reimbursement updateStatus(String status, int id, Manager manager){
+        return rb.updateStatus(status, id, manager);
     }
     public List <Reimbursement> getByStatus(String status){
         return rb.getReimbursementByStatus(status);

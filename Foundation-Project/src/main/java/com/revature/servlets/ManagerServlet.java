@@ -62,16 +62,10 @@ public class ManagerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     }
 
-    //    @Override
-    //    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    //        resp.getContentType("application/json");
-    //        HttpSession session = req.getSession(false);
-    //        if (session != null) {
-    //            Manager loggedM = (Manager) session.getAttribute("auth-user")l;
-    //            Reimbursement reimbursement = obmap.readValue(req.getInputStream(), Reimbursement.class);
-    //            if (reimbursement)
-    //        }
-    //    }
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doPut(req, resp);
+    }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
